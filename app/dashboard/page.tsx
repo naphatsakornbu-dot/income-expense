@@ -79,6 +79,14 @@ export default function DashboardPage() {
 
   const balance = income - expense;
 
+  const chartOptions = {
+    plugins: {
+      legend: {
+        position: "bottom" as const,
+      },
+    },
+  };
+
   const pieData = useMemo(() => {
     const expenseItems = transactions.filter((item) => item.type === "expense");
     const grouped: Record<string, number> = {};
@@ -94,6 +102,16 @@ export default function DashboardPage() {
         {
           label: "รายจ่ายตามหมวดหมู่",
           data: Object.values(grouped),
+          backgroundColor: [
+            "#ef4444",
+            "#f97316",
+            "#eab308",
+            "#22c55e",
+            "#3b82f6",
+            "#8b5cf6",
+            "#ec4899",
+          ],
+          borderWidth: 1,
         },
       ],
     };
@@ -118,10 +136,12 @@ export default function DashboardPage() {
         {
           label: "รายรับ",
           data: labels.map((day) => grouped[day].income),
+          backgroundColor: "#22c55e",
         },
         {
           label: "รายจ่าย",
           data: labels.map((day) => grouped[day].expense),
+          backgroundColor: "#ef4444",
         },
       ],
     };
@@ -174,12 +194,20 @@ export default function DashboardPage() {
       <div className="grid grid-2">
         <div className="card chart-card">
           <h2 style={{ marginTop: 0 }}>กราฟรายจ่ายตามหมวดหมู่</h2>
-          {pieData.labels.length === 0 ? <p className="empty">ยังไม่มีข้อมูลรายจ่าย</p> : <Pie data={pieData} />}
+          {pieData.labels.length === 0 ? (
+            <p className="empty">ยังไม่มีข้อมูลรายจ่าย</p>
+          ) : (
+            <Pie data={pieData} options={chartOptions} />
+          )}
         </div>
 
         <div className="card chart-card">
           <h2 style={{ marginTop: 0 }}>กราฟรายรับเทียบรายจ่ายรายวัน</h2>
-          {barData.labels.length === 0 ? <p className="empty">ยังไม่มีข้อมูล</p> : <Bar data={barData} />}
+          {barData.labels.length === 0 ? (
+            <p className="empty">ยังไม่มีข้อมูล</p>
+          ) : (
+            <Bar data={barData} options={chartOptions} />
+          )}
         </div>
       </div>
 
