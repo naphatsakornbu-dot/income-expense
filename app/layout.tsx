@@ -16,7 +16,7 @@ export default function RootLayout({
       <body>
         <div className="app-shell">
           <aside className="sidebar">
-            <div className="sidebar-title">Money App</div>
+            <div className="sidebar-title">บันทึกรายรับ-รายจ่าย</div>
             <nav className="sidebar-nav">
               <Link href="/">หน้าแรก</Link>
               <Link href="/dashboard">Dashboard</Link>
